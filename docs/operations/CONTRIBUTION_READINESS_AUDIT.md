@@ -24,6 +24,8 @@ Scope: open-source contribution structure, GitHub publishing, and discoverabilit
 | Runtime behavior | UNCHANGED | This pass intentionally avoided changes under `voice_agent_backend/app/` and `voice_agent_backend/frontend/`. |
 | GitHub remote | PASS | `origin` points to `https://github.com/RossDmello2/voice-rag-agent.git`. |
 | Discoverability metadata | PASS | Repository description and all 20 planned topics are configured through `gh repo edit`. |
+| Branch protection | PASS | `main` requires CI and CodeQL checks; force pushes and deletions are disabled. |
+| Remote checks | PASS | Main-branch CI and CodeQL completed successfully after the workflow dependency fix. |
 
 ## Open-Source Standards Applied
 
@@ -65,12 +67,11 @@ Scope: open-source contribution structure, GitHub publishing, and discoverabilit
 
 ## Recommended Next PR Shape
 
-1. Push the branch to `origin`.
-2. Confirm Actions and CodeQL results on GitHub.
-3. Upload `docs/assets/social-preview.png` in repository settings because the supported `gh` surface does not expose social-preview image upload.
-4. Add branch protection after the initial push once required checks are visible.
+1. Upload `docs/assets/social-preview.png` in repository settings because the supported `gh` surface does not expose social-preview image upload.
+2. Review Dependabot PRs one at a time; they opened automatically after publishing.
+3. Keep an eye on upstream GitHub Actions Node.js runtime deprecation warnings and update actions when v4/v6 replacements are available.
 
 ## Remaining Gaps
 
 - Hosted deployment still needs the blockers from `docs/intelligence/2026-05-28-codebase-intelligence-v3/SA10_DEPLOYMENT_READINESS.md` addressed.
-- GitHub branch protection, secret scanning UI, required checks, and social preview image upload require GitHub-side confirmation after the first push.
+- GitHub social preview image upload requires a repository-settings action; the source image is already committed.

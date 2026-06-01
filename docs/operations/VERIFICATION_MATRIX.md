@@ -8,6 +8,10 @@
 | Branch created | `git branch --show-current` | PASS | Working branch: `codex/open-source-readiness`. |
 | GitHub repository created | `gh repo view RossDmello2/voice-rag-agent --json nameWithOwner,visibility,description,url` | PASS | Repository is public and `origin` points to `https://github.com/RossDmello2/voice-rag-agent.git`. |
 | GitHub topics configured | `gh repo view RossDmello2/voice-rag-agent --json repositoryTopics` | PASS | All 20 planned topics are configured. |
+| Branch protection | `gh api repos/RossDmello2/voice-rag-agent/branches/main/protection` | PASS | `main` requires `lint`, `test (3.11)`, `Analyze (python)`, and `Analyze (javascript-typescript)`; force pushes and deletions are disabled. |
+| GitHub security automation | `gh api .../vulnerability-alerts`; `gh api .../automated-security-fixes` | PASS | Dependabot vulnerability alerts and automated security fixes are enabled or already enabled. |
+| Remote CI | GitHub Actions run `26751805898` | PASS | `lint` and `test (3.11)` passed on `main` after pinning `bcrypt<5` and narrowing flake8 to syntax-critical checks. |
+| Remote CodeQL | GitHub Actions run `26751805879` | PASS | Python and JavaScript/TypeScript CodeQL analyses passed on `main`. |
 | Local artifact ignore | `git check-ignore voice_agent_backend/.env voice_agent_backend/data/models/kokoro-v1.0.onnx voice_agent_backend/data/sqlite/voice_agent.db` | PASS | `.env`, Kokoro ONNX, and SQLite DB are ignored. |
 | No tracked secrets/artifacts | `git ls-files \| rg "(^|/)\\.env$|\\.onnx$|\\.bin$|voice_agent_backend/data/sqlite/.*\\.(db|sqlite|sqlite3)$"` | PASS | No tracked `.env`, model binary, or runtime DB artifacts. |
 | JavaScript syntax | `node --check voice_agent_backend/frontend/script.js` | PASS | Exit 0. |
@@ -24,4 +28,5 @@
 
 - GitHub social preview upload is available in repository settings, but `gh repo edit` does not expose a supported image-upload flag. The source image is committed at `docs/assets/social-preview.png` and the upload step is documented in `docs/guides/GITHUB_PUBLISHING_CHECKLIST.md`.
 - Full provider smoke depends on local Qdrant, Ollama, Kokoro artifacts, and valid Groq credentials.
+- GitHub Actions currently reports upcoming Node.js 20 action-runtime deprecation warnings for upstream actions; CI and CodeQL still pass.
 - FastAPI `on_event` and SQLAlchemy `datetime.utcnow()` deprecation warnings remain pre-existing follow-up items.
